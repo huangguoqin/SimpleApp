@@ -62,34 +62,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    TestView *view2 = [[TestView alloc] init];
-    view2.backgroundColor = [UIColor greenColor];
-    view2.frame = CGRectMake(150, 150, 100, 100);
-    [self.view addSubview:view2];
-    
-    //建立手势：tapGesture，相应具体的方法pushController
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushController)];
-    [view2 addGestureRecognizer:tapGesture];
-    
+    // 创建一个uitableview，大小等于整个UiViewController的大小
+    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    // 把tableView加到整个视图结构中
+    [self.view addSubview:tableView];
 }
-- (void)pushController{
-    // 创建一个viewController
-    UIViewController *viewController = [[UIViewController alloc] init];
-    // 背景色
-    viewController.view.backgroundColor = [UIColor whiteColor];
-    // 标题
-    viewController.navigationItem.title = @"内容";
-    
-    // 设置标题右侧样式
-    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"右侧标题" style:UIBarButtonItemStylePlain target:self action:nil];
-    
-//    UIViewController *viewcontroller = [[UIViewController alloc]init];
-//    viewcontroller.view.backgroundColor = [UIColor whiteColor];
-//    viewcontroller.navigationItem.title = @"内容";
-//
-//    viewcontroller.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"右侧标题" style:UIBarButtonItemStylePlain target:self action:nil];
-    
-    [self.navigationController pushViewController:viewController animated:YES];
-}
+
 @end

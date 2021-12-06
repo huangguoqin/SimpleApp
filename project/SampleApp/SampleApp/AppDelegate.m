@@ -8,7 +8,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <UITabBarControllerDelegate>
 
 @end
 
@@ -19,6 +19,9 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UITabBarController *tabbarController = [[UITabBarController alloc] init];
+    
+    NSLog(@"did select");
+
     
     ViewController *viewController = [[ViewController alloc] init];
     
@@ -50,11 +53,17 @@
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabbarController];
     
+    // 说明我们需要自定义执行那些tabbar的delegate方法是在当前这个文件（className）中执行的
+    tabbarController.delegate = self;
+    
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     return YES;
 }
 
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{
+    NSLog(@"dis select11");
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

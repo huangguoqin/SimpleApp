@@ -69,17 +69,27 @@
     [self.view addSubview:view2];
     
     //建立手势：tapGesture，相应具体的方法pushController
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushController)];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushController)];
     [view2 addGestureRecognizer:tapGesture];
     
 }
 - (void)pushController{
-    UIViewController *viewcontroller = [[UIViewController alloc]init];
-    viewcontroller.view.backgroundColor = [UIColor whiteColor];
-    viewcontroller.navigationItem.title = @"内容";
+    // 创建一个viewController
+    UIViewController *viewController = [[UIViewController alloc] init];
+    // 背景色
+    viewController.view.backgroundColor = [UIColor whiteColor];
+    // 标题
+    viewController.navigationItem.title = @"内容";
     
-    viewcontroller.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"右侧标题" style:UIBarButtonItemStylePlain target:self action:nil];
+    // 设置标题右侧样式
+    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"右侧标题" style:UIBarButtonItemStylePlain target:self action:nil];
     
-    [self.navigationController pushViewController:viewcontroller animated:YES];
+//    UIViewController *viewcontroller = [[UIViewController alloc]init];
+//    viewcontroller.view.backgroundColor = [UIColor whiteColor];
+//    viewcontroller.navigationItem.title = @"内容";
+//
+//    viewcontroller.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"右侧标题" style:UIBarButtonItemStylePlain target:self action:nil];
+    
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 @end

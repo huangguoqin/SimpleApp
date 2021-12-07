@@ -64,8 +64,29 @@
     [super viewDidLoad];
     // 创建一个uitableview，大小等于整个UiViewController的大小
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    
+    tableView.dataSource = self;
+    
     // 把tableView加到整个视图结构中
     [self.view addSubview:tableView];
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    // 列表长度
+    return 20;
+}
+
+// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"id"];
+    cell.textLabel.text = @"主标题";
+    cell.detailTextLabel.text = @"副标题";
+    cell.imageView.image = [UIImage imageNamed:@"icon.bundle/video.png"];
+//    cell.textLabel = @"777";
+    return cell;
+}
+
 
 @end

@@ -6,35 +6,10 @@
 //
 
 #import "ViewController.h"
-
-@interface TestView : UIView // 创建一个自己的TestView，继承于UIView
-
-@end
-
-@implementation TestView
-- (instancetype)init{
-    self = [super init];
-    if (self) {
-    }
-    return self;
-}
-- (void)willMoveToSuperview:(nullable UIView *)newSuperview{
-    [super willMoveToSuperview:newSuperview];
-}
-- (void)didMoveToSuperview{
-    [super didMoveToSuperview];
-}
-- (void)willMoveToWindow:(nullable UIWindow *)newWindow{
-    [super willMoveToWindow:newWindow];
-}
-- (void)didMoveToWindow{
-    [super didMoveToWindow];
-}
-@end
+#import "GTNormalTableViewCell.h"
 
 
-
-@interface ViewController ()
+@interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
 @end
 @implementation ViewController
 
@@ -66,9 +41,19 @@
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     
     tableView.dataSource = self;
+    tableView.delegate = self;
     
     // 把tableView加到整个视图结构中
     [self.view addSubview:tableView];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UIViewController *controller = [[UIViewController alloc] init];
+    controller.title = [NSString stringWithFormat:@"%@" , @(indexPath.row)];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -80,11 +65,12 @@
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"id"];
-    cell.textLabel.text = @"主标题";
-    cell.detailTextLabel.text = @"副标题";
-    cell.imageView.image = [UIImage imageNamed:@"icon.bundle/video.png"];
-//    cell.textLabel = @"777";
+    GTNormalTableViewCell *cell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"id"];
+    if(!cell){
+        cell = [[GTNormalTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"id"];
+    }
+    [cell layoutTableViewCell];
+    
     return cell;
 }
 

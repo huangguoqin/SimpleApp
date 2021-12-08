@@ -15,6 +15,7 @@
 		6314F0E222673B2700D9DC06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314F0E122673B2700D9DC06 /* main.m */; };
 		C5470AB32760329D00BF3E71 /* GTVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5470AB22760329D00BF3E71 /* GTVideoViewController.m */; };
 		C5470AB62760BFE900BF3E71 /* GTRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5470AB52760BFE900BF3E71 /* GTRecommendViewController.m */; };
+		C5470AB92760DD7400BF3E71 /* GTNormalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5470AB82760DD7400BF3E71 /* GTNormalTableViewCell.m */; };
 		C57749F2275A4B0C004AA24A /* icon.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C57749F1275A4B0C004AA24A /* icon.bundle */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,8 @@
 		C5470AB22760329D00BF3E71 /* GTVideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTVideoViewController.m; sourceTree = "<group>"; };
 		C5470AB42760BFE900BF3E71 /* GTRecommendViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTRecommendViewController.h; sourceTree = "<group>"; };
 		C5470AB52760BFE900BF3E71 /* GTRecommendViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTRecommendViewController.m; sourceTree = "<group>"; };
+		C5470AB72760DD7400BF3E71 /* GTNormalTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTNormalTableViewCell.h; sourceTree = "<group>"; };
+		C5470AB82760DD7400BF3E71 /* GTNormalTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTNormalTableViewCell.m; sourceTree = "<group>"; };
 		C57749F1275A4B0C004AA24A /* icon.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = icon.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +83,8 @@
 				C5470AB22760329D00BF3E71 /* GTVideoViewController.m */,
 				C5470AB42760BFE900BF3E71 /* GTRecommendViewController.h */,
 				C5470AB52760BFE900BF3E71 /* GTRecommendViewController.m */,
+				C5470AB72760DD7400BF3E71 /* GTNormalTableViewCell.h */,
+				C5470AB82760DD7400BF3E71 /* GTNormalTableViewCell.m */,
 			);
 			path = SampleApp;
 			sourceTree = "<group>";
@@ -158,6 +163,7 @@
 				6314F0D722673B2600D9DC06 /* ViewController.m in Sources */,
 				6314F0E222673B2700D9DC06 /* main.m in Sources */,
 				6314F0D422673B2600D9DC06 /* AppDelegate.m in Sources */,
+				C5470AB92760DD7400BF3E71 /* GTNormalTableViewCell.m in Sources */,
 				C5470AB62760BFE900BF3E71 /* GTRecommendViewController.m in Sources */,
 				C5470AB32760329D00BF3E71 /* GTVideoViewController.m in Sources */,
 			);

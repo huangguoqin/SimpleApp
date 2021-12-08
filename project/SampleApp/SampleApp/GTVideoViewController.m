@@ -32,6 +32,13 @@
     // Do any additional setup after loading the view.
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     
+    // 两个cell之间的最小行间距
+    flowLayout.minimumLineSpacing = 10;
+    // 每一列的最小间距
+    flowLayout.minimumInteritemSpacing = 10;
+    // 每个cell的大小,self.view.frame.size.width表示整个屏幕的宽度
+    flowLayout.itemSize = CGSizeMake( (self.view.frame.size.width-10)/2, 300);
+    
     UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flowLayout];
     
     collectionView.delegate = self;
@@ -53,6 +60,14 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"UICollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor redColor];
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.item % 3 == 0) {
+        return CGSizeMake(self.view.frame.size.width, 100);
+    }else{
+        return CGSizeMake( (self.view.frame.size.width-10)/2, 300);
+    }
 }
 
 @end

@@ -8,7 +8,7 @@
 
 #import "GTRecommendViewController.h"
 
-@interface GTRecommendViewController ()
+@interface GTRecommendViewController ()<UIScrollViewDelegate>
 
 @end
 
@@ -59,8 +59,31 @@
     // 启用pagingEnabled，翻页效果
     scrollView.pagingEnabled = YES;
     
+    scrollView.delegate = self;
+    
     [self.view addSubview:scrollView];
 }
+
+// 滚动-监听⻚⾯滚动，以及根据Offset做业务逻辑
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+//    NSLog(@"scrollViewDidScroll - %@", @(scrollView.contentOffset.x) );
+}
+
+// 拖拽-中断⼀些业务逻辑，如视频/gif播放
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    NSLog(@"scrollViewWillBeginDragging");
+}
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset API_AVAILABLE(ios(5.0)){
+    NSLog(@"scrollViewWillEndDragging");
+}
+//减速-⻚⾯停⽌时开始逻辑，如视频⾃动播放
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+    NSLog(@"scrollViewWillBeginDecelerating");
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    NSLog(@"scrollViewDidEndDecelerating");
+}
+
 
 
 @end

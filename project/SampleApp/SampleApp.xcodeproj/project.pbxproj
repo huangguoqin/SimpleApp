@@ -14,6 +14,7 @@
 		6314F0DF22673B2700D9DC06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6314F0DD22673B2700D9DC06 /* LaunchScreen.storyboard */; };
 		6314F0E222673B2700D9DC06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314F0E122673B2700D9DC06 /* main.m */; };
 		C5470AB32760329D00BF3E71 /* GTVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5470AB22760329D00BF3E71 /* GTVideoViewController.m */; };
+		C5470AB62760BFE900BF3E71 /* GTRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5470AB52760BFE900BF3E71 /* GTRecommendViewController.m */; };
 		C57749F2275A4B0C004AA24A /* icon.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C57749F1275A4B0C004AA24A /* icon.bundle */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,8 @@
 		6314F0E122673B2700D9DC06 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C5470AB12760329D00BF3E71 /* GTVideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTVideoViewController.h; sourceTree = "<group>"; };
 		C5470AB22760329D00BF3E71 /* GTVideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTVideoViewController.m; sourceTree = "<group>"; };
+		C5470AB42760BFE900BF3E71 /* GTRecommendViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTRecommendViewController.h; sourceTree = "<group>"; };
+		C5470AB52760BFE900BF3E71 /* GTRecommendViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTRecommendViewController.m; sourceTree = "<group>"; };
 		C57749F1275A4B0C004AA24A /* icon.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = icon.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +78,8 @@
 				6314F0E122673B2700D9DC06 /* main.m */,
 				C5470AB12760329D00BF3E71 /* GTVideoViewController.h */,
 				C5470AB22760329D00BF3E71 /* GTVideoViewController.m */,
+				C5470AB42760BFE900BF3E71 /* GTRecommendViewController.h */,
+				C5470AB52760BFE900BF3E71 /* GTRecommendViewController.m */,
 			);
 			path = SampleApp;
 			sourceTree = "<group>";
@@ -106,7 +111,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1020;
-				ORGANIZATIONNAME = "钟鑫";
+				ORGANIZATIONNAME = "黄某某";
 				TargetAttributes = {
 					6314F0CE22673B2600D9DC06 = {
 						CreatedOnToolsVersion = 10.2;
@@ -153,6 +158,7 @@
 				6314F0D722673B2600D9DC06 /* ViewController.m in Sources */,
 				6314F0E222673B2700D9DC06 /* main.m in Sources */,
 				6314F0D422673B2600D9DC06 /* AppDelegate.m in Sources */,
+				C5470AB62760BFE900BF3E71 /* GTRecommendViewController.m in Sources */,
 				C5470AB32760329D00BF3E71 /* GTVideoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

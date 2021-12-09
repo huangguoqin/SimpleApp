@@ -8,7 +8,7 @@
 
 #import "GTRecommendViewController.h"
 
-@interface GTRecommendViewController ()<UIScrollViewDelegate>
+@interface GTRecommendViewController ()<UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @end
 
@@ -50,10 +50,28 @@
     for (int i = 0; i < 5; ++i) {
         [scrollView addSubview:({
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width * i, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            
+            [view addSubview:({
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+                view.backgroundColor = [UIColor yellowColor];
+                
+                UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] init];
+                [tapGesture addTarget:self action:@selector(viewClick)];
+                // 制定手势响应为self
+                tapGesture.delegate = self;
+                // 添加view的手势响应
+                [view addGestureRecognizer:tapGesture];
+                
+                view;
+            })];
+            
+            
             // 设置背景色
             view.backgroundColor = colorArray[i];
             view;
         })];
+        
+        
     }
     
     // 启用pagingEnabled，翻页效果
@@ -84,6 +102,9 @@
     NSLog(@"scrollViewDidEndDecelerating");
 }
 
+- (void)viewClick{
+    NSLog(@"viewClick");
+}
 
 
 @end

@@ -18,6 +18,9 @@
 
 @property(nonatomic, strong, readwrite) UIImageView *rightImabeView;
 
+@property(nonatomic, strong, readwrite) UIButton *deleteButton;
+
+
 @end
 
 @implementation GTNormalTableViewCell
@@ -59,6 +62,14 @@
             self.rightImabeView = [[UIImageView alloc] initWithFrame:CGRectMake(20+300+10, 15, 70, 70)];
             self.rightImabeView.backgroundColor = [UIColor redColor];
             self.rightImabeView;
+        })];
+        
+        [self.contentView addSubview:({
+            self.deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(290, 80, 30, 20)];
+            self.deleteButton.backgroundColor = [UIColor blueColor];
+            [self.deleteButton setTitle:@"X" forState:UIControlStateNormal];
+            [self.deleteButton setTitle:@"V" forState:UIControlStateHighlighted];
+            self.deleteButton;
         })];
     }
     return self;

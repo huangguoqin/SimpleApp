@@ -16,6 +16,8 @@
 @property(nonatomic, strong, readwrite) UILabel *commentLable;
 @property(nonatomic, strong, readwrite) UILabel *timeLable;
 
+@property(nonatomic, strong, readwrite) UIImageView *rightImabeView;
+
 @end
 
 @implementation GTNormalTableViewCell
@@ -52,6 +54,12 @@
             self.timeLable.textColor = [UIColor grayColor];
             self.timeLable;
         })];
+        
+        [self.contentView addSubview:({
+            self.rightImabeView = [[UIImageView alloc] initWithFrame:CGRectMake(20+300+10, 15, 70, 70)];
+            self.rightImabeView.backgroundColor = [UIColor redColor];
+            self.rightImabeView;
+        })];
     }
     return self;
 }
@@ -75,6 +83,8 @@
     [self.commentLable sizeToFit];
     // commentLable 评论的x，self.commentLable.frame.size.width 评论的宽度
     self.timeLable.frame = CGRectMake(self.commentLable.frame.origin.x + self.commentLable.frame.size.width +15, self.timeLable.frame.origin.y, self.timeLable.frame.size.width, self.timeLable.frame.size.height);
+    // 设置图片
+    self.rightImabeView.image = [UIImage imageNamed:@"icon.bundle/icon.png"];
 }
 
 @end

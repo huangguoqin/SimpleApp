@@ -69,6 +69,8 @@
             self.deleteButton.backgroundColor = [UIColor blueColor];
             [self.deleteButton setTitle:@"X" forState:UIControlStateNormal];
             [self.deleteButton setTitle:@"V" forState:UIControlStateHighlighted];
+            
+            [self.deleteButton addTarget:self action:@selector(deleteButtonClick) forControlEvents:UIControlEventTouchUpInside];
             self.deleteButton;
         })];
     }
@@ -98,4 +100,7 @@
     self.rightImabeView.image = [UIImage imageNamed:@"icon.bundle/icon.png"];
 }
 
+-(void) deleteButtonClick{
+    NSLog(@"deleteButtonClick");
+}
 @end

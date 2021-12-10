@@ -106,5 +106,10 @@
     NSLog(@"viewClick");
 }
 
+// 是否响应手势
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    return YES;
+}
+
 
 @end

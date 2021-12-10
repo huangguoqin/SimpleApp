@@ -20,11 +20,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"777");
     // Do any additional setup after loading the view.
     [self.view addSubview:({
-        self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 88, self.view.frame.size.width, self.view.frame.size
-                                                                   .height - 88)];
+        self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 88, self.view.frame.size.width, self.view.frame.size.height - 88)];
         self.webView.navigationDelegate = self;
         self.webView;
     })];

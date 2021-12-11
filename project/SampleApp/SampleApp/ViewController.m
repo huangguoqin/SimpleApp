@@ -12,41 +12,33 @@
 
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
+@property(nonatomic, strong, readwrite) UITableView *tableView;
+@property(nonatomic, strong, readwrite) NSMutableArray *dataArray;
 @end
 @implementation ViewController
 
 - (instancetype)init{
     self = [super init];
     if (self){
-        
+        // 复制一份，避免使用同一个
+        _dataArray = @[].mutableCopy;
+        for (int i=0; i<20; ++i) {
+            [_dataArray addObject:@(i)];
+        }
     }
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-}// Called when the view is about to made visible. Default does nothing
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-}// Called when the view has been fully transitioned onto the screen. Default does nothing
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-} // Called when the view is dismissed, covered or otherwise hidden. Default does nothing
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-}  // Called after the view was dismissed, covered or otherwise hidden. Default does nothing
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // 创建一个uitableview，大小等于整个UiViewController的大小
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     
-    tableView.dataSource = self;
-    tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
     
     // 把tableView加到整个视图结构中
-    [self.view addSubview:tableView];
+    [self.view addSubview:_tableView];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -60,7 +52,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // 列表长度
-    return 20;
+    return _dataArray.count;
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:

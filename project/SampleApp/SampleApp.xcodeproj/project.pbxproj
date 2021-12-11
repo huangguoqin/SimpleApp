@@ -19,6 +19,7 @@
 		C5470AB92760DD7400BF3E71 /* GTNormalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5470AB82760DD7400BF3E71 /* GTNormalTableViewCell.m */; };
 		C57749F2275A4B0C004AA24A /* icon.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C57749F1275A4B0C004AA24A /* icon.bundle */; };
 		C5EAA3352764AF7C00C61484 /* GTListLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C5EAA3342764AF7C00C61484 /* GTListLoader.m */; };
+		C5EAA3382764C46000C61484 /* GTListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C5EAA3372764C46000C61484 /* GTListItem.m */; };
 		D4B183D1B3AD6C972723CF71 /* libPods-SampleApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5FCFC6E63D94CA7D5FF8C0 /* libPods-SampleApp.a */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,8 @@
 		C57749F1275A4B0C004AA24A /* icon.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = icon.bundle; sourceTree = "<group>"; };
 		C5EAA3332764AF7C00C61484 /* GTListLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTListLoader.h; sourceTree = "<group>"; };
 		C5EAA3342764AF7C00C61484 /* GTListLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTListLoader.m; sourceTree = "<group>"; };
+		C5EAA3362764C46000C61484 /* GTListItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTListItem.h; sourceTree = "<group>"; };
+		C5EAA3372764C46000C61484 /* GTListItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTListItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +85,6 @@
 		6314F0D122673B2600D9DC06 /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
-				C5EAA3322764AF5F00C61484 /* loader */,
 				C5EAA32F2764A2DC00C61484 /* NewsController */,
 				6314F0D222673B2600D9DC06 /* AppDelegate.h */,
 				6314F0D322673B2600D9DC06 /* AppDelegate.m */,
@@ -103,39 +105,42 @@
 		C5EAA32F2764A2DC00C61484 /* NewsController */ = {
 			isa = PBXGroup;
 			children = (
-				6314F0D522673B2600D9DC06 /* GTNewsViewController.h */,
-				6314F0D622673B2600D9DC06 /* GTNewsViewController.m */,
-				C5470AB72760DD7400BF3E71 /* GTNormalTableViewCell.h */,
-				C5470AB82760DD7400BF3E71 /* GTNormalTableViewCell.m */,
-				C5EAA3312764A2FD00C61484 /* detail */,
-				C5EAA3302764A2E700C61484 /* List */,
+				C5EAA3322764AF5F00C61484 /* Model */,
+				C5EAA3312764A2FD00C61484 /* Controller */,
+				C5EAA3302764A2E700C61484 /* View */,
 			);
 			path = NewsController;
 			sourceTree = "<group>";
 		};
-		C5EAA3302764A2E700C61484 /* List */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = List;
-			sourceTree = "<group>";
-		};
-		C5EAA3312764A2FD00C61484 /* detail */ = {
+		C5EAA3302764A2E700C61484 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				C54518DE27636A1600024B37 /* GTDetailViewController.h */,
 				C54518DF27636A1600024B37 /* GTDetailViewController.m */,
+				C5470AB72760DD7400BF3E71 /* GTNormalTableViewCell.h */,
+				C5470AB82760DD7400BF3E71 /* GTNormalTableViewCell.m */,
 			);
-			path = detail;
+			path = View;
 			sourceTree = "<group>";
 		};
-		C5EAA3322764AF5F00C61484 /* loader */ = {
+		C5EAA3312764A2FD00C61484 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6314F0D522673B2600D9DC06 /* GTNewsViewController.h */,
+				6314F0D622673B2600D9DC06 /* GTNewsViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C5EAA3322764AF5F00C61484 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				C5EAA3332764AF7C00C61484 /* GTListLoader.h */,
 				C5EAA3342764AF7C00C61484 /* GTListLoader.m */,
+				C5EAA3362764C46000C61484 /* GTListItem.h */,
+				C5EAA3372764C46000C61484 /* GTListItem.m */,
 			);
-			path = loader;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		D5677A40D363F75E9C83A20E /* Pods */ = {
@@ -144,7 +149,6 @@
 				2D7508C44BCE19C473582A05 /* Pods-SampleApp.debug.xcconfig */,
 				3DA34850B1596014BDBF28FA /* Pods-SampleApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -258,6 +262,7 @@
 				6314F0D422673B2600D9DC06 /* AppDelegate.m in Sources */,
 				C5470AB92760DD7400BF3E71 /* GTNormalTableViewCell.m in Sources */,
 				C54518E027636A1600024B37 /* GTDetailViewController.m in Sources */,
+				C5EAA3382764C46000C61484 /* GTListItem.m in Sources */,
 				C5470AB62760BFE900BF3E71 /* GTRecommendViewController.m in Sources */,
 				C5470AB32760329D00BF3E71 /* GTVideoViewController.m in Sources */,
 				C5EAA3352764AF7C00C61484 /* GTListLoader.m in Sources */,

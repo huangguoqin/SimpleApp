@@ -10,9 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ 定义个block，（在.h文件中）GTListItem不要用引入头文件的方式，等使用时再通过头文件引入
+ */
+@class GTListItem;
+
+typedef void(^GTListLoaderFinishBlock)(BOOL success, NSArray<GTListItem *> *dataArray);
+
 @interface GTListLoader : NSObject
 
--(void) loadListData;
+/**
+ 暴露方法供外界调用，调用时需要按GTListLoaderFinishBlock格式传入参数
+ */
+-(void) loadListDataWithFinishBlock:(GTListLoaderFinishBlock)finishBlock;
 
 @end
 

@@ -16,8 +16,8 @@
     self.date = [dictionary objectForKey:@"date"];
     self.category = [dictionary objectForKey:@"category"];
     self.authorName = [dictionary objectForKey:@"author_name"];
-    self.articleUrl = [dictionary objectForKey:@"thumbnail_pic_s"];
-    self.picUrl = [dictionary objectForKey:@"title"];
+    self.articleUrl = [dictionary objectForKey:@"url"];
+    self.picUrl = [dictionary objectForKey:@"thumbnail_pic_s"];
 }
 
 @end

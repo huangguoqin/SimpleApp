@@ -13,6 +13,7 @@
 
 @property(nonatomic, strong, readwrite) WKWebView *webView;
 @property(nonatomic, strong, readwrite) UIProgressView *progressView;
+@property(nonatomic, copy, readwrite) NSString *articleUrl;
 
 @end
 
@@ -21,6 +22,14 @@
 - (void) dealloc{
     // 页面销毁时移除监听
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress" context:nil];
+}
+
+-(instancetype)initWithUrlString:(NSString *)urlString{
+    self = [super init];
+    if(self){
+        self.articleUrl = urlString;
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -44,7 +53,7 @@
         self.progressView;
     })];
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://weixin.wstmart.net"]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.articleUrl]]];
     
     
 }

@@ -13,7 +13,7 @@
 @implementation GTListLoader
 
 
--(void)loadListData{
+-(void) loadListDataWithFinishBlock:(GTListLoaderFinishBlock)finishBlock{
     NSString *urlString = @"http://v.juhe.cn/toutiao/index.php?type=top&key=97ad001bfcc2082e2eeaf798bad3d54e";
     
 //    [[AFHTTPSessionManager manager] GET:urlString parameters:nil headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
@@ -42,6 +42,18 @@
             [listItem configWithDictionary: info];
             [listItemArray addObject:listItem];
         }
+        
+        // 因为涉及刷新问题，启用线程，将整个block放到主线程
+        
+        // 将整个block放到主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // 在此处调用block
+            if(finishBlock){
+                finishBlock(error==nil, listItemArray.copy);
+            }
+        });
+        
+        
         NSLog(@"");
     }];
 

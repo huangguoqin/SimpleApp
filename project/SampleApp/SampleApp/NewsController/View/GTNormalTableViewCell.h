@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class GTListItem;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GTNormalTableViewCell : UITableViewCell
 
--(void)layoutTableViewCell;
+-(void)layoutTableViewCellWithItem:(GTListItem *) item;
 
 @end
 

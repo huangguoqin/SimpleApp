@@ -6,11 +6,11 @@
 //  Copyright © 2021 黄某某. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "GTNewsViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GTDetailViewController : ViewController
+@interface GTDetailViewController : GTNewsViewController
 
 @end
 

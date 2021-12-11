@@ -1,21 +1,21 @@
 //
-//  ViewController.m
+//  GTNewsViewController.m
 //  SampleApp
 //
 //  Created by 黄某某 on 2021/12/3.
 //
 
-#import "ViewController.h"
+#import "GTNewsViewController.h"
 #import "GTNormalTableViewCell.h"
 #import "GTDetailViewController.h"
 
 
 
-@interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface GTNewsViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong, readwrite) UITableView *tableView;
 @property(nonatomic, strong, readwrite) NSMutableArray *dataArray;
 @end
-@implementation ViewController
+@implementation GTNewsViewController
 
 - (instancetype)init{
     self = [super init];

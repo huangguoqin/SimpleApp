@@ -6,7 +6,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "GTNewsViewController.h"
 #import "GTVideoViewController.h"
 #import "GTRecommendViewController.h"
 
@@ -25,26 +25,24 @@
     NSLog(@"did select");
 
     
-    ViewController *viewController = [[ViewController alloc] init];
+    GTNewsViewController *newsViewController = [[GTNewsViewController alloc] init];
     
-//    UIViewController *controller1 =[[UIViewController alloc]init];
-//    controller1.view.backgroundColor = [UIColor redColor];
-    viewController.tabBarItem.title = @"新闻";
-    viewController.tabBarItem.image = [UIImage imageNamed:@"icon.bundle/page@2x.png"];
-    viewController.tabBarItem.selectedImage = [UIImage imageNamed:@"ico.bundle/page_selected@2x.png"];
+    newsViewController.tabBarItem.title = @"新闻";
+    newsViewController.tabBarItem.image = [UIImage imageNamed:@"icon.bundle/page@2x.png"];
+    newsViewController.tabBarItem.selectedImage = [UIImage imageNamed:@"ico.bundle/page_selected@2x.png"];
     
     GTVideoViewController *videoController = [[GTVideoViewController alloc] init];
     
     GTRecommendViewController *recommend =[[GTRecommendViewController alloc] init];
     
     
-    UIViewController *controller4 =[[UIViewController alloc] init];
-    controller4.view.backgroundColor = [UIColor lightGrayColor];
-    controller4.tabBarItem.title = @"我的";
-    controller4.tabBarItem.image = [UIImage imageNamed:@"icon.bundle/home@2x.png"];
-    controller4.tabBarItem.selectedImage = [UIImage imageNamed:@"ico.bundle/home_selected@2x.png"];
+    UIViewController *mineViewController =[[UIViewController alloc] init];
+    mineViewController.view.backgroundColor = [UIColor lightGrayColor];
+    mineViewController.tabBarItem.title = @"我的";
+    mineViewController.tabBarItem.image = [UIImage imageNamed:@"icon.bundle/home@2x.png"];
+    mineViewController.tabBarItem.selectedImage = [UIImage imageNamed:@"ico.bundle/home_selected@2x.png"];
     
-    [tabbarController setViewControllers:@[viewController,videoController,recommend,controller4]];
+    [tabbarController setViewControllers:@[newsViewController,videoController,recommend,mineViewController]];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabbarController];
     

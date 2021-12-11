@@ -8,12 +8,13 @@
 #import "GTNewsViewController.h"
 #import "GTNormalTableViewCell.h"
 #import "GTDetailViewController.h"
-
+#import "GTListLoader.h"
 
 
 @interface GTNewsViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong, readwrite) UITableView *tableView;
 @property(nonatomic, strong, readwrite) NSMutableArray *dataArray;
+@property(nonatomic, strong, readwrite) GTListLoader *listLoader;
 @end
 @implementation GTNewsViewController
 
@@ -36,6 +37,10 @@
     
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    
+    // load remote data
+    self.listLoader = [[GTListLoader alloc] init];
+    [self.listLoader loadListData];
     
     // 把tableView加到整个视图结构中
     [self.view addSubview:_tableView];

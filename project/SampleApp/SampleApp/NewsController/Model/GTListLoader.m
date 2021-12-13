@@ -58,9 +58,57 @@
     }];
 
     [dataTask resume];
+    
+    [self _getSandBoxPath];
     NSLog(@"SDasdasd");
 }
-
+//
+-(void) _getSandBoxPath{
+    NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [pathArray firstObject];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    // 在cache目录下创建文件夹，起名为GTData；dataPath为目录地址
+    NSString *dataPath = [cachePath stringByAppendingPathComponent:@"GTData"];
+    
+    NSError *createError;
+    [fileManager createDirectoryAtPath:dataPath withIntermediateDirectories:YES attributes:nil error:&createError];
+    
+    // 创建文件，起名为list
+    NSString *listDataPath = [dataPath stringByAppendingPathComponent:@"list"];
+    
+  
+    
+    
+    // 创建文件内容，格式编码为utf8
+    NSData *listData = [@"abc" dataUsingEncoding:NSUTF8StringEncoding];
+    [fileManager createFileAtPath:listDataPath contents:listData attributes:nil];
+    
+    
+    //文件内容追加操作
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:listDataPath];
+    // 将offset调整到文件的末尾
+    [fileHandle seekToEndOfFile];
+    // 执行追加操作
+    [fileHandle writeData:[@"def" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // 刷新文件
+    [fileHandle synchronizeFile];
+    // 释放文件
+    [fileHandle closeFile];
+    
+    
+//    // 查询文件
+//    BOOL fileExists = [fileManager fileExistsAtPath:listDataPath];
+//
+//    // 删除文件
+//    if(fileExists){
+//        [fileManager removeItemAtPath:listDataPath error:nil];
+//    }
+    
+    NSLog(@"");
+}
 @end
 
 

@@ -28,8 +28,11 @@
 //    __unused NSURLRequest *listRequest = [NSURLRequest requestWithURL:listURL];
     // initial session 初始化session
     NSURLSession *session = [NSURLSession sharedSession];
+    
+    __weak typeof(self) weakSelf = self;
     // 将session封装成task
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:listURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        __weak typeof(weakSelf) strongSelf = weakSelf;
         NSError *jsonError;
         id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
 #warning 类型的检查
@@ -42,6 +45,9 @@
             [listItem configWithDictionary: info];
             [listItemArray addObject:listItem];
         }
+        
+        // 缓存数据
+        [weakSelf _archiveListDataWithArray:listItemArray.copy];
         
         // 因为涉及刷新问题，启用线程，将整个block放到主线程
         
@@ -59,11 +65,10 @@
 
     [dataTask resume];
     
-    [self _getSandBoxPath];
     NSLog(@"SDasdasd");
 }
 //
--(void) _getSandBoxPath{
+-(void) _archiveListDataWithArray:(NSArray<GTListItem *> *)array{
     NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *cachePath = [pathArray firstObject];
     
@@ -78,25 +83,36 @@
     // 创建文件，起名为list
     NSString *listDataPath = [dataPath stringByAppendingPathComponent:@"list"];
     
+    // 将服务器返回的数据进行格式化
+    NSData *listData = [NSKeyedArchiver archivedDataWithRootObject:array requiringSecureCoding: YES error:nil];
+    
+    [fileManager createFileAtPath:listDataPath contents:listData attributes:nil];
+    
+    // 从文件中读取数据
+    NSData *readListData = [fileManager contentsAtPath:listDataPath];
+    // 反序列化
+    id unarchiveObj = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithObjects:[NSArray class], [GTListItem class], nil] fromData:readListData error:nil];
+    
+    
   
     
     
-    // 创建文件内容，格式编码为utf8
-    NSData *listData = [@"abc" dataUsingEncoding:NSUTF8StringEncoding];
-    [fileManager createFileAtPath:listDataPath contents:listData attributes:nil];
-    
-    
-    //文件内容追加操作
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:listDataPath];
-    // 将offset调整到文件的末尾
-    [fileHandle seekToEndOfFile];
-    // 执行追加操作
-    [fileHandle writeData:[@"def" dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    // 刷新文件
-    [fileHandle synchronizeFile];
-    // 释放文件
-    [fileHandle closeFile];
+//    // 创建文件内容，格式编码为utf8
+//    NSData *listData = [@"abc" dataUsingEncoding:NSUTF8StringEncoding];
+//    [fileManager createFileAtPath:listDataPath contents:listData attributes:nil];
+//
+//
+//    //文件内容追加操作
+//    NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:listDataPath];
+//    // 将offset调整到文件的末尾
+//    [fileHandle seekToEndOfFile];
+//    // 执行追加操作
+//    [fileHandle writeData:[@"def" dataUsingEncoding:NSUTF8StringEncoding]];
+//
+//    // 刷新文件
+//    [fileHandle synchronizeFile];
+//    // 释放文件
+//    [fileHandle closeFile];
     
     
 //    // 查询文件

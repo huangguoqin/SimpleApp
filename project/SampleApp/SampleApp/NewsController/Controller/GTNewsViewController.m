@@ -58,6 +58,9 @@
     GTDetailViewController *controller = [[GTDetailViewController alloc] initWithUrlString:item.articleUrl];
     controller.title = [NSString stringWithFormat:@"%@" , @(indexPath.row)];
     [self.navigationController pushViewController:controller animated:YES];
+    
+    // 记录点击状态
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:item.title];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

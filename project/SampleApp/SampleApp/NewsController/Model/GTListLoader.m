@@ -16,58 +16,81 @@
 -(void) loadListDataWithFinishBlock:(GTListLoaderFinishBlock)finishBlock{
     NSString *urlString = @"http://v.juhe.cn/toutiao/index.php?type=top&key=97ad001bfcc2082e2eeaf798bad3d54e";
     
-//    [[AFHTTPSessionManager manager] GET:urlString parameters:nil headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-//
-//        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//            NSLog(@"success````");
-//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//            NSLog(@"failure```");
-//        }];
-    NSLog(@"");
-    NSURL *listURL = [NSURL URLWithString:urlString];
-//    __unused NSURLRequest *listRequest = [NSURLRequest requestWithURL:listURL];
-    // initial session 初始化session
-    NSURLSession *session = [NSURLSession sharedSession];
+    NSArray<GTListItem *> *cacheData = [self _readDataFromLocal];
+    if(cacheData){
+        finishBlock(YES, cacheData.copy);
+    }
     
-    __weak typeof(self) weakSelf = self;
-    // 将session封装成task
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:listURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        __weak typeof(weakSelf) strongSelf = weakSelf;
-        NSError *jsonError;
-        id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-#warning 类型的检查
-        NSArray *dataArray = [(NSDictionary *)[((NSDictionary *)jsonObj) objectForKey:@"result"] objectForKey:@"data"];
-        
-        NSMutableArray *listItemArray = @[].mutableCopy;
-        
-        for (NSDictionary *info in dataArray) {
-            GTListItem *listItem = [[GTListItem alloc] init];
-            [listItem configWithDictionary: info];
-            [listItemArray addObject:listItem];
-        }
-        
-        // 缓存数据
-        [weakSelf _archiveListDataWithArray:listItemArray.copy];
-        
-        // 因为涉及刷新问题，启用线程，将整个block放到主线程
-        
-        // 将整个block放到主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // 在此处调用block
-            if(finishBlock){
-                finishBlock(error==nil, listItemArray.copy);
-            }
-        });
-        
-        
-        NSLog(@"");
-    }];
 
-    [dataTask resume];
-    
-    NSLog(@"SDasdasd");
-}
+
+//    NSLog(@"");
+//    NSURL *listURL = [NSURL URLWithString:urlString];
+////    __unused NSURLRequest *listRequest = [NSURLRequest requestWithURL:listURL];
+//    // initial session 初始化session
+//    NSURLSession *session = [NSURLSession sharedSession];
 //
+//    __weak typeof(self) weakSelf = self;
+//    // 将session封装成task
+//    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:listURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        __weak typeof(weakSelf) strongSelf = weakSelf;
+//        NSError *jsonError;
+//        id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+//#warning 类型的检查
+//        NSArray *dataArray = [(NSDictionary *)[((NSDictionary *)jsonObj) objectForKey:@"result"] objectForKey:@"data"];
+//
+//        NSMutableArray *listItemArray = @[].mutableCopy;
+//
+//        for (NSDictionary *info in dataArray) {
+//            GTListItem *listItem = [[GTListItem alloc] init];
+//            [listItem configWithDictionary: info];
+//            [listItemArray addObject:listItem];
+//        }
+//
+//        // 缓存数据
+//        [weakSelf _archiveListDataWithArray:listItemArray.copy];
+//
+//        // 因为涉及刷新问题，启用线程，将整个block放到主线程
+//
+//        // 将整个block放到主线程
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            // 在此处调用block
+//            if(finishBlock){
+//                finishBlock(error==nil, listItemArray.copy);
+//            }
+//        });
+//
+//
+//        NSLog(@"");
+//    }];
+//
+//    [dataTask resume];
+//
+//    NSLog(@"SDasdasd");
+}
+
+// 取出本地缓存
+-(NSArray<GTListItem *> *) _readDataFromLocal{
+    NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [pathArray firstObject];
+    NSString *listDataPath = [cachePath stringByAppendingPathComponent:@"GTData/list"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    // 从文件中读取数据
+    NSData *readListData = [fileManager contentsAtPath:listDataPath];
+    
+    // 反序列化
+    id unarchiveObj = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithObjects:[NSArray class], [GTListItem class], nil] fromData:readListData error:nil];
+    
+    if([unarchiveObj isKindOfClass:[NSArray class]] && [unarchiveObj count]>0){
+        return (NSArray<GTListItem *> *)unarchiveObj;
+    }
+    
+    return nil;;
+}
+
+
+// 将数据存入缓存中
 -(void) _archiveListDataWithArray:(NSArray<GTListItem *> *)array{
     NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *cachePath = [pathArray firstObject];
@@ -89,19 +112,19 @@
     [fileManager createFileAtPath:listDataPath contents:listData attributes:nil];
     
     // 从文件中读取数据
-    NSData *readListData = [fileManager contentsAtPath:listDataPath];
+//    NSData *readListData = [fileManager contentsAtPath:listDataPath];
     // 反序列化
 //    id unarchiveObj = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithObjects:[NSArray class], [GTListItem class], nil] fromData:readListData error:nil];
     
     
-    // 存入NSUserDefaults
-    [[NSUserDefaults standardUserDefaults] setObject:listData forKey:@"listData"];
-    
-    // 从NSUserDefaults中读取数据
-    NSData *testListData = [[NSUserDefaults standardUserDefaults] dataForKey:@"listData"];
-    
-    // 解析数据
-    id unarchiveObj = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithObjects:[NSArray class], [GTListItem class], nil] fromData:testListData error:nil];
+//    // 存入NSUserDefaults
+//    [[NSUserDefaults standardUserDefaults] setObject:listData forKey:@"listData"];
+//
+//    // 从NSUserDefaults中读取数据
+//    NSData *testListData = [[NSUserDefaults standardUserDefaults] dataForKey:@"listData"];
+//
+//    // 解析数据
+//    id unarchiveObj = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithObjects:[NSArray class], [GTListItem class], nil] fromData:testListData error:nil];
         
   
     
@@ -132,7 +155,6 @@
 //        [fileManager removeItemAtPath:listDataPath error:nil];
 //    }
     
-    NSLog(@"");
 }
 @end
 

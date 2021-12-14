@@ -89,6 +89,13 @@
 
 // 定义一个实例方法，在.h文件中暴露给外界调用（挂在cell时调用）
 -(void)layoutTableViewCellWithItem:(GTListItem *) item{
+    BOOL hasRead = [[NSUserDefaults standardUserDefaults] boolForKey:item.title];
+    if(hasRead){
+        self.titleLable.textColor = [UIColor grayColor];
+    }else{
+        self.titleLable.textColor = [UIColor blackColor];
+    }
+    
     self.titleLable.text = item.title;
     
     self.sourceLable.text = item.authorName;

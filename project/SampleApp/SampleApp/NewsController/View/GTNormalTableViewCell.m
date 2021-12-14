@@ -114,11 +114,16 @@
     // commentLable 评论的x，self.commentLable.frame.size.width 评论的宽度
     self.timeLable.frame = CGRectMake(self.commentLable.frame.origin.x + self.commentLable.frame.size.width +15, self.timeLable.frame.origin.y, self.timeLable.frame.size.width, self.timeLable.frame.size.height);
     
-    // 设置图片
-#warning
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.picUrl]]];
-//    self.rightImabeView.image = [UIImage imageNamed:@"icon.bundle/icon.png"];
-    self.rightImabeView.image = image;
+    // 设置图片 - 在子线程中加载图片，提高列表滚动流畅度
+    NSThread *downloadImageThread = [[NSThread alloc] initWithBlock:^{
+        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.picUrl]]];
+        self.rightImabeView.image = image;
+    }];
+    // 线程命名
+    downloadImageThread.name = @"downloadImageThread";
+    // 调用子线程
+    [downloadImageThread start];
+    
 }
 
 -(void) deleteButtonClick{

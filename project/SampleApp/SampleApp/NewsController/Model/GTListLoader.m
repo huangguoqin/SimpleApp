@@ -91,9 +91,18 @@
     // 从文件中读取数据
     NSData *readListData = [fileManager contentsAtPath:listDataPath];
     // 反序列化
-    id unarchiveObj = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithObjects:[NSArray class], [GTListItem class], nil] fromData:readListData error:nil];
+//    id unarchiveObj = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithObjects:[NSArray class], [GTListItem class], nil] fromData:readListData error:nil];
     
     
+    // 存入NSUserDefaults
+    [[NSUserDefaults standardUserDefaults] setObject:listData forKey:@"listData"];
+    
+    // 从NSUserDefaults中读取数据
+    NSData *testListData = [[NSUserDefaults standardUserDefaults] dataForKey:@"listData"];
+    
+    // 解析数据
+    id unarchiveObj = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithObjects:[NSArray class], [GTListItem class], nil] fromData:testListData error:nil];
+        
   
     
     

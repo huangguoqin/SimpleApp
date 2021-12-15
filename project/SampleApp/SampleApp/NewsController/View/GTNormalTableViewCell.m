@@ -8,6 +8,7 @@
 
 #import "GTNormalTableViewCell.h"
 #import "GTListItem.h"
+#import "SDWebImage.h"
 
 @interface GTNormalTableViewCell()
 
@@ -125,18 +126,24 @@
 //    [downloadImageThread start];
     
     
-    // 获取非主线程队列
-    dispatch_queue_global_t downloadThread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    //获取主线程队列
-    dispatch_queue_main_t mainQueue = dispatch_get_main_queue();
-    // 切换到子线程：下载图片的耗时操作由非主线程完成
-    dispatch_async(downloadThread, ^{
-        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.picUrl]]];
-        // 切换为主线程，ui相关操作在主线程中完成
-        dispatch_async(mainQueue, ^{
-            self.rightImabeView.image = image;
-        });
-    });
+//    // 获取非主线程队列
+//    dispatch_queue_global_t downloadThread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//    //获取主线程队列
+//    dispatch_queue_main_t mainQueue = dispatch_get_main_queue();
+//    // 切换到子线程：下载图片的耗时操作由非主线程完成
+//    dispatch_async(downloadThread, ^{
+//        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.picUrl]]];
+//        // 切换为主线程，ui相关操作在主线程中完成
+//        dispatch_async(mainQueue, ^{
+//            self.rightImabeView.image = image;
+//        });
+//    });
+    
+    [self.rightImabeView sd_setImageWithURL:[NSURL URLWithString:item.picUrl] 
+                                  completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                                        NSLog(@"");
+                                }];
+    
     
 }
 

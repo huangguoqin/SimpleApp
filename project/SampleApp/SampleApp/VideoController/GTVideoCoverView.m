@@ -7,7 +7,7 @@
 //
 
 #import "GTVideoCoverView.h"
-
+#import <AVFoundation/AVFoundation.h>
 @interface GTVideoCoverView()
 
 // 视频缩略图
@@ -30,7 +30,7 @@
             self.coverView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
             self.coverView;
         })];
-        [self addSubview:({
+        [_coverView addSubview:({
             int imageW = 50;
             int imageH = 50;
             self.playButton = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width-imageW)/2, (self.frame.size.height-imageH)/2, imageW, imageH)];
@@ -63,6 +63,20 @@
 #pragma mark private method
 -(void)_tapToPay{
     NSLog(@"asjdlask0");
+    
+    NSURL *videoURL = [NSURL URLWithString:_videoUrl];
+    
+    AVAsset *asset = [AVAsset assetWithURL:videoURL];
+    
+    AVPlayerItem *videoItem = [AVPlayerItem playerItemWithAsset:asset];
+    
+    AVPlayer *avPlayer = [AVPlayer playerWithPlayerItem:videoItem];
+    
+    AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:avPlayer];
+    playerLayer.frame = _coverView.bounds;
+    [_coverView.layer addSublayer:playerLayer];
+    
+    [avPlayer play];
 }
 
 @end

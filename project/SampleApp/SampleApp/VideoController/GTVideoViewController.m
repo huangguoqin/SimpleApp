@@ -6,6 +6,7 @@
 //
 
 #import "GTVideoViewController.h"
+#import "GTVideoCoverView.h"
 
 @interface GTVideoViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -44,7 +45,7 @@
     collectionView.delegate = self;
     collectionView.dataSource = self;
     //    必须先注册 Cell 类型⽤于重⽤
-    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"UICollectionViewCell"];
+    [collectionView registerClass:[GTVideoCoverView class] forCellWithReuseIdentifier:@"GTVideoCoverView"];
     
     [self.view addSubview:collectionView];
     
@@ -57,17 +58,15 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     // 如果没有已创建的cell，系统会调用注册的cell创建方法自动创建一个
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"UICollectionViewCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor redColor];
+    GTVideoCoverView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GTVideoCoverView" forIndexPath:indexPath];
+    if([cell isKindOfClass:[GTVideoCoverView class]]){
+        [(GTVideoCoverView*)cell layoutWithVideoCoverUrl:@"icon.bundle/splash.png" videoUrl:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"];
+    }
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.item % 3 == 0) {
-        return CGSizeMake(self.view.frame.size.width, 100);
-    }else{
-        return CGSizeMake( (self.view.frame.size.width-10)/2, 300);
-    }
+    return CGSizeMake(self.view.frame.size.width, self.view.frame.size.width / 16 * 9);
 }
 
 @end

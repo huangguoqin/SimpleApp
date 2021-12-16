@@ -10,6 +10,10 @@
 #import <AVFoundation/AVFoundation.h>
 @interface GTVideoCoverView()
 
+
+@property(nonatomic, strong, readwrite) AVPlayerItem *videoItem;
+@property(nonatomic, strong, readwrite) AVPlayer *avPlayer;
+@property(nonatomic, strong, readwrite) AVPlayerLayer *playerLayer;
 // 视频缩略图
 @property(nonatomic, strong, readwrite) UIImageView *coverView;
 
@@ -17,7 +21,7 @@
 @property(nonatomic, strong, readwrite) UIImageView *playButton;
 
 // 视频播放url
-@property(nonatomic, strong, readwrite) NSString *videoUrl;
+@property(nonatomic, copy, readwrite) NSString *videoUrl;
     
 @end
 
@@ -43,8 +47,15 @@
             
             self.playButton;
         })];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_handlerPlayEnd) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     }
     return self;
+}
+- (void)dealloc
+{
+    // 移除监听
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark public method
@@ -68,15 +79,25 @@
     
     AVAsset *asset = [AVAsset assetWithURL:videoURL];
     
-    AVPlayerItem *videoItem = [AVPlayerItem playerItemWithAsset:asset];
+    _videoItem = [AVPlayerItem playerItemWithAsset:asset];
     
-    AVPlayer *avPlayer = [AVPlayer playerWithPlayerItem:videoItem];
+    _avPlayer = [AVPlayer playerWithPlayerItem:_videoItem];
     
-    AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:avPlayer];
-    playerLayer.frame = _coverView.bounds;
-    [_coverView.layer addSublayer:playerLayer];
+    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_avPlayer];
+    _playerLayer.frame = _coverView.bounds;
+    [_coverView.layer addSublayer:_playerLayer];
     
-    [avPlayer play];
+    [_avPlayer play];
+}
+
+-(void)_handlerPlayEnd{
+    NSLog(@"视频播放完毕");
+    
+    // 将视频播放器移除
+    [_playerLayer removeFromSuperlayer];
+    
+    _avPlayer = nil;
+    _videoItem = nil;
 }
 
 @end

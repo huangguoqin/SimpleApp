@@ -56,6 +56,8 @@
 {
     // 移除监听
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [_videoItem removeObserver:self forKeyPath:@"status"];
 }
 
 #pragma mark public method
@@ -81,13 +83,15 @@
     
     _videoItem = [AVPlayerItem playerItemWithAsset:asset];
     
+    [_videoItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    
     _avPlayer = [AVPlayer playerWithPlayerItem:_videoItem];
     
     _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_avPlayer];
     _playerLayer.frame = _coverView.bounds;
     [_coverView.layer addSublayer:_playerLayer];
     
-    [_avPlayer play];
+    
 }
 
 -(void)_handlerPlayEnd{
@@ -98,6 +102,19 @@
     
     _avPlayer = nil;
     _videoItem = nil;
+}
+
+
+#pragma mark KVO
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    if([keyPath isEqualToString:@"status"]){
+        // 判断视频是否加载完毕
+        if(((NSNumber *)[change objectForKey:NSKeyValueChangeNewKey]).integerValue == AVPlayerItemStatusReadyToPlay){
+            [_avPlayer play];
+        }else{
+            NSLog(@"");
+        }
+    }
 }
 
 @end
